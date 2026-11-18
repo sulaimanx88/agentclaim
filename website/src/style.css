@@ -1,0 +1,257 @@
+:root {
+  --bg: #f7f7f4;
+  --surface: #ffffff;
+  --text: #1a1a1a;
+  --muted: #666;
+  --border: #e2e2dc;
+  --accent: #1a7f4b;
+  --accent-dark: #146638;
+  --warn-bg: #fff7e0;
+  --warn-border: #e8c85a;
+  --info-bg: #eaf2ff;
+  --info-border: #7aa7e8;
+  --error: #b3261e;
+  --ok: #1a7f4b;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+a { color: var(--accent); }
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.75rem 1.25rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.tabs { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+
+.tab {
+  border: none;
+  background: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.tab.active { background: #e9f5ee; color: var(--accent-dark); font-weight: 600; }
+.tab:hover { background: #f0f0ec; }
+
+.wallet-area {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+select, input {
+  font: inherit;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+.hero { margin: 0.5rem 0 1.5rem; }
+.hero h1 { margin: 0 0 0.5rem; font-size: 1.8rem; line-height: 1.2; }
+.hero p { margin: 0; color: var(--muted); max-width: 640px; }
+
+.banner {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+.banner.warn { background: var(--warn-bg); border: 1px solid var(--warn-border); }
+.banner.info { background: var(--info-bg); border: 1px solid var(--info-border); }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; word-break: break-word; }
+
+.pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.pill.live { background: #dcf5e5; color: #146638; }
+.pill.upcoming { background: #eaf2ff; color: #1d4ed8; }
+.pill.ended { background: #eee; color: #666; }
+.pill.soldout { background: #fdecea; color: #b3261e; }
+
+dl { margin: 0.5rem 0 1rem; font-size: 0.9rem; }
+dl > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.15rem 0; }
+dt { color: var(--muted); }
+dd { margin: 0; text-align: right; word-break: break-word; }
+
+.btn {
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover:not(:disabled) { background: var(--accent-dark); }
+.btn.ghost { background: none; }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.claim-note { margin: 0.5rem 0 0; }
+
+.how { margin-top: 2.5rem; }
+.how ol { padding-left: 1.25rem; }
+.how li { margin-bottom: 0.5rem; }
+
+.muted { color: var(--muted); }
+.small { font-size: 0.85rem; }
+.error { color: var(--error); }
+.error-text { color: var(--error); }
+.ok-text { color: var(--ok); }
+.warn-text { color: #7a5b00; }
+
+.status { min-height: 1.4em; font-size: 0.95rem; }
+.status:empty { display: none; }
+
+.form {
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+.form label { display: flex; flex-direction: column; gap: 0.35rem; font-weight: 600; font-size: 0.95rem; }
+.form label input { font-weight: 400; }
+
+.contract-panel {
+  margin-top: 2.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+}
+.contract-panel h2 { margin: 0 0 0.25rem; font-size: 1.1rem; }
+.contract-panel summary { cursor: pointer; font-weight: 600; margin-top: 0.75rem; }
+
+.row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+.row input { flex: 1; min-width: 220px; }
+
+.badge-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #eef3f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+}
+img.badge-img { display: block; }
+
+footer {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 50;
+}
+.backdrop[hidden] { display: none; }
+
+.dialog {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 460px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.dialog h2 { margin: 0; }
+.dialog p { margin: 0; }
+.dialog label { display: flex; flex-direction: column; gap: 0.35rem; font-weight: 600; }
+.dialog label span { font-weight: 400; }
+#claim-answer {
+  font-size: 1.5rem;
+  letter-spacing: 0.5em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .wallet-area { margin-left: 0; width: 100%; }
+  .wallet-area select { flex: 1; }
+}
