@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgentClaim — Free claims for Agent ID holders</title>
+    <meta
+      name="description"
+      content="AgentClaim lets anyone launch a free claim campaign that only Agent ID holders can claim. Claims are free; the contract holds no user funds."
+    />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎟️</text></svg>" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" id="brand-home">🎟️ AgentClaim</a>
+      <nav class="tabs" aria-label="Sections">
+        <button class="tab active" data-view="campaigns">Campaigns</button>
+        <button class="tab" data-view="create">Create campaign</button>
+        <button class="tab" data-view="badges">My badges</button>
+      </nav>
+      <div class="wallet-area">
+        <select id="chain-select" aria-label="Network">
+          <option value="97">BNB Chain Testnet</option>
+          <option value="56">BNB Chain</option>
+        </select>
+        <button id="connect-btn" class="btn primary">Connect wallet</button>
+      </div>
+    </header>
+
+    <main>
+      <div id="deploy-banner" class="banner warn" hidden>
+        <strong>Contract not deployed yet.</strong>
+        <span id="deploy-banner-text"></span>
+        You can still browse this page; claiming and creating unlock once a
+        contract address is configured for this network.
+      </div>
+
+      <div id="wallet-banner" class="banner info" hidden>
+        <span id="wallet-banner-text"></span>
+      </div>
+
+      <section id="view-campaigns" class="view">
+        <div class="hero">
+          <h1>Free claims, only for Agent ID holders.</h1>
+          <p>
+            Anyone can launch a claim campaign. Only wallets holding an Agent
+            ID can claim a badge — free, plus network gas. No payments, no
+            earnings, no promises: just a badge that says you were there.
+          </p>
+        </div>
+
+        <div id="campaign-list" class="cards" aria-live="polite"></div>
+        <p id="campaign-empty" class="muted" hidden>
+          No campaigns yet on this network. Be the first to create one.
+        </p>
+        <p id="campaign-error" class="error" hidden></p>
+
+        <section class="how">
+          <h2>How it works</h2>
+          <ol>
+            <li>
+              <strong>Hold an Agent ID.</strong> The contract checks on-chain
+              whether your wallet holds an Agent ID. No ID, no claim.
+            </li>
+            <li>
+              <strong>Claim.</strong> Pick a live campaign. The site fetches
+              your 4-digit anti-bot code from the contract and fills it in —
+              one click, free apart from network gas.
+            </li>
+            <li>
+              <strong>Keep your badge.</strong> Each claim mints an ERC-721
+              badge to your wallet. It is a collectible, not an investment.
+            </li>
+          </ol>
+          <p class="muted small">
+            The 4-digit code is a lightweight speed bump against naive bots —
+            it is readable on-chain by anyone, so it is not strong bot-proofing
+            and we do not present it as such. Campaigns are created by anyone
+            and are not endorsed by AgentClaim.
+          </p>
+        </section>
+      </section>
+
+      <section id="view-create" class="view" hidden>
+        <h1>Create a campaign</h1>
+        <p class="muted">
+          Launch a free badge drop. Campaign rules cannot be changed after
+          creation, so double-check the numbers before you submit. Creating a
+          campaign costs only network gas.
+        </p>
+        <form id="create-form" class="form">
+          <label>
+            Campaign name
+            <input id="create-name" type="text" maxlength="64" required placeholder="e.g. Early Supporter Badge" />
+          </label>
+          <label>
+            Max supply (total badges)
+            <input id="create-supply" type="number" min="1" max="1000000" step="1" required placeholder="100" />
+          </label>
+          <label>
+            Per-wallet limit
+            <input id="create-limit" type="number" min="1" max="1000000" step="1" required placeholder="1" />
+          </label>
+          <label>
+            Start time
+            <input id="create-start" type="datetime-local" required />
+          </label>
+          <label>
+            End time
+            <input id="create-end" type="datetime-local" required />
+          </label>
+          <p id="create-status" class="status" aria-live="polite"></p>
+          <button type="submit" class="btn primary" id="create-submit">Create campaign</button>
+        </form>
+      </section>
+
+      <section id="view-badges" class="view" hidden>
+        <h1>My badges</h1>
+        <p class="muted">
+          Badges owned by the connected wallet on this network.
+        </p>
+        <div id="badge-list" class="cards" aria-live="polite"></div>
+        <p id="badge-empty" class="muted" hidden>
+          No badges yet. Claim one from a live campaign.
+        </p>
+        <p id="badge-error" class="error" hidden></p>
+      </section>
+
+      <section class="contract-panel">
+        <h2>Contract</h2>
+        <p class="muted small" id="contract-info"></p>
+        <details>
+          <summary>Use a different contract address (demo)</summary>
+          <p class="muted small">
+            Point this page at any AgentClaim contract without redeploying.
+            Saved only in this browser. Leave empty to use the configured
+            address.
+          </p>
+          <div class="row">
+            <input id="custom-address" type="text" placeholder="0x…" spellcheck="false" />
+            <button id="custom-save" class="btn">Apply</button>
+            <button id="custom-clear" class="btn ghost">Clear</button>
+          </div>
+          <p id="custom-status" class="status" aria-live="polite"></p>
+        </details>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        AgentClaim is open-source. The contract is not upgradeable, accepts no
+        payments, and holds no user funds — claims are free apart from network
+        gas. Badges are collectibles with no promised value.
+      </p>
+      <p class="muted small">
+        Never share your seed phrase or private key with anyone — this site
+        will never ask for them.
+      </p>
+    </footer>
+
+    <!-- Claim dialog -->
+    <div id="claim-dialog-backdrop" class="backdrop" hidden>
+      <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="claim-title">
+        <h2 id="claim-title">Claim badge</h2>
+        <p id="claim-campaign" class="muted"></p>
+        <div id="claim-holder" class="status" aria-live="polite"></div>
+        <label>
+          Your 4-digit code
+          <span class="muted small">Fetched from the contract for your wallet — no need to compute anything.</span>
+          <input id="claim-answer" type="text" inputmode="numeric" maxlength="4" readonly />
+        </label>
+        <p id="claim-status" class="status" aria-live="polite"></p>
+        <div class="row">
+          <button id="claim-confirm" class="btn primary">Claim badge</button>
+          <button id="claim-cancel" class="btn ghost">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
