@@ -217,6 +217,14 @@ async function loadCampaigns() {
     campaignsCache = [];
     for (let id = 0; id < next; id++) {
       const c = await contract.campaigns(id);
+      // Campaign IDs start at 1, so id 0 (and any never-created slot) reads
+      // back as the zero struct — skip it instead of rendering an empty card.
+      if (
+        c.creator === '0x0000000000000000000000000000000000000000' ||
+        Number(c.maxSupply) === 0
+      ) {
+        continue;
+      }
       campaignsCache.push({
         id,
         creator: c.creator,
