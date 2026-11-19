@@ -51,9 +51,9 @@ submission period.
 - [x] BscScan verified-source links:
       https://bscscan.com/address/0xef9B77D0F8f9Bea2058483dD0330caB823D4ad1C
       (Sourcify exact match; direct BscScan confirmation pending)
-- [ ] Public source-code repo link: https://github.com/sulaimanx88/agentclaim
-      (repo being created 2026-11-18 — check this box once the browser
-      confirms the upload)
+- [x] Public source-code repo link: https://github.com/sulaimanx88/agentclaim
+      (created 2026-11-19 ~00:05 WIB; all 32 files verified in place via the
+      public GitHub API; MIT license; About set with website + topics)
 - [ ] Reward receiving address: **TBD** (decide with Markus — which wallet
       receives USDC if we win)
 - [ ] Submission form / portal link: **TBD — NOT in the announcement text.**
